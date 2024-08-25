@@ -8,15 +8,14 @@ if (isset($ruta["query"])) {
     $ruta["query"] == "ctrEliProducto"
   ) {
     $metodo = $ruta["query"];
-    $producto = new ControladorProducto();
+    $producto = new controladorProducto();
     $producto->$metodo();
   }
 }
 
-class ControladorProducto
+class controladorProducto
 {
-
-  static public function ctrInfoproductos()
+  static public function ctrInfoProductos()
   {
     $respuesta = ModeloProducto::mdlInfoProductos();
     return $respuesta;
@@ -24,20 +23,22 @@ class ControladorProducto
 
   static public function ctrRegProducto()
   {
-    require "../modelo/productoModelo.php";
-
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-    $data = array(
-      "loginproducto" => $_POST["login"],
-      "password" => $password,
-      "perfil" => "Moderador"
-    );
-
-    $respuesta = ModeloProducto::mdlRegproducto($data);
-
-    echo $respuesta;
-  }
+      require "../modelo/productoModelo.php";
+      $data = array(
+          "cod_producto" => $_POST["cod_producto"],
+          "cod_producto_sin" => $_POST["cod_producto_sin"],
+          "nombre_producto" => $_POST["nombre_producto"],
+          "precio_producto" => $_POST["precio_producto"],
+          "unidad_medida" => $_POST["unidad_medida"],
+          "unidad_medida_sin" => $_POST["unidad_medida_sin"],
+          "imagen_producto" => $_POST["imagen_producto"],
+      );
+  
+      // var_dump($data);
+      $respuesta = ModeloProducto::mdlRegProducto($data);
+  
+      echo $respuesta;
+  }  
 
   static public function ctrInfoProducto($id)
   {
@@ -47,34 +48,29 @@ class ControladorProducto
 
   static function ctrEditProducto()
   {
-    require "../modelo/productoModelo.php";
-
-    if ($_POST["password"] == $_POST["passActual"]) {
-      $password = $_POST["password"];
-    } else {
-      $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    }
-
-
-    $data = array(
-      "password" => $password,
-      "id" => $_POST["idproducto"],
-      "perfil" => $_POST["perfil"],
-      "estado" => $_POST["estado"]
-    );
-
-    ModeloProducto::mdlEditProducto($data);
-    $respuesta = ModeloProducto::mdlEditProducto($data);
-
-    echo $respuesta;
-  }
+      require "../modelo/productoModelo.php";
+      $data = array(
+          "cod_producto" => $_POST["cod_producto"],
+          "cod_producto_sin" => $_POST["cod_producto_sin"],
+          "nombre_producto" => $_POST["nombre_producto"],
+          "precio_producto" => $_POST["precio_producto"],
+          "unidad_medida" => $_POST["unidad_medida"],
+          "unidad_medida_sin" => $_POST["unidad_medida_sin"],
+          "imagen_producto" => $_POST["imagen_producto"],
+          "disponible" => $_POST["disponible"],
+          "id_producto" => $_POST["id"]
+      );
+  
+      $respuesta = ModeloProducto::mdlEditProducto($data);
+      echo $respuesta;
+  }  
 
   static function ctrEliProducto()
   {
     require "../modelo/productoModelo.php";
     $id = $_POST["id"];
 
-    $respuesta = Modeloproducto::mdlEliProducto($id);
+    $respuesta = ModeloProducto::mdlEliProducto($id);
     echo $respuesta;
   }
 }

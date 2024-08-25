@@ -32,14 +32,12 @@
 <script src="assest/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="assest/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="assest/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
 <!-- SweetAlert2 -->
 <script src="assest/plugins/sweetalert2/sweetalert2.min.js"></script>
 
 <script src="assest/js/usuario.js"></script>
 <script src="assest/js/cliente.js"></script>
 <script src="assest/js/producto.js"></script>
-
 <script src="assest/js/factura.js"></script>
 
 <!-- seccion de modelos -->
@@ -62,8 +60,6 @@
         </div>
         <!-- /.modal-dialog -->
 </div>
-
-
 <!-- jquery-validation -->
 <script src="assest/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="assest/plugins/jquery-validation/additional-methods.min.js"></script>
@@ -78,7 +74,6 @@
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
-
 </script>
 </body>
 </html>
