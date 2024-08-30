@@ -248,6 +248,7 @@
                         </tr>
                     </thead>
                     <tbody id="listaDetalle">
+                        
 
                     </tbody>
                 </table>
