@@ -103,7 +103,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Descuento</span>
                                 </div>
-                                <input type="text" class="form-control" name="descAdicional" id="descAdicional" value="0.00">
+                                <input type="text" class="form-control" name="descAdicional" id="descAdicional" value="0.00" onkeyup="calcularTotal()">
                             </div>
 
                             <div class="input-group sm-3">
@@ -121,6 +121,11 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <!-- panel de avisos -->
+                             <div class="callout callout-info direct-chat-messanges" style="height:100px; width:290px">
+                                <span class="list-unstyled" id="panelInfo"></span>
+                             </div>
 
                         </div>
                     </div>
@@ -258,3 +263,13 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<script>
+    setTimeout(()=>{
+        verificarVigenciaCufd()
+    }, 4000)
+
+    setTimeout(()=>{
+        extraerLeyenda()
+    }, 5000)
+</script>
