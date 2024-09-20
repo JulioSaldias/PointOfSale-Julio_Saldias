@@ -353,7 +353,6 @@ function validarformulario() {
 function emitirFactura() {
 
   if (validarformulario() == true) {
-
     let date = new Date()
 
     let numFactura = parseInt(document.getElementById("numFactura").value)
@@ -432,6 +431,8 @@ function emitirFactura() {
       contentType: "application/json",
       processData: false,
       success: function (data) {
+        console.log(data)
+        
         if(data["codigoResultado"]!= 908){
           $("#panelInfo").before("<span class='text-danger'>Error, Factura no emitida!</span><br>")
         }else{
@@ -486,7 +487,38 @@ function registrarFactura(datos){
     data: obj,
     cache: false,
     success: function (data) {
-      console.log(data)
+      if(data=="ok"){
+        Swal.fire({
+          icon:"success",
+          showConfirmButton:false,
+          title:"Factura Registrada"
+        })
+        setTimeout(function(){
+          location.reload()
+        }, 1000)
+      }else{
+        Swal.fire({
+          icon:"error",
+          showConfirmButton:false,
+          title:"Error de registro",
+          timer:1500
+        })
+      }
     }
   })
+}
+
+function MVerFactura(id){
+  $("#modal-xl").modal("show");
+   
+  var obj="";
+  $.ajax({
+ 
+     type:"POST",
+     url:"vista/factura/MVerFactura.php?id="+id,
+     data: obj,
+     success: function(data) {
+         $("#content-xl").html(data);
+     }
+  })
 }

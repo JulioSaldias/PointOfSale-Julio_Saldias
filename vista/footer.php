@@ -55,31 +55,47 @@ seccion de modals
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
- 
-<div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content" id="content-lg">
-            
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
 
-  <!-- jquery-validation -->
+<div class="modal fade" id="modal-lg">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" id="content-lg">
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modal-xl">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content" id="content-xl">
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+<!-- jquery-validation -->
 <script src="assest/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="assest/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="assest/plugins/jquery-validation/localization/messages_es.js"></script>
 
 <script>
- $(function () {
+  $(function() {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true,
+      "lengthChange": false,
+      "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    
+
   });
 </script>
 </body>
+
 </html>

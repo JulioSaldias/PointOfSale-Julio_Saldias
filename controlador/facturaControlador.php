@@ -4,8 +4,6 @@ $ruta = parse_url($_SERVER["REQUEST_URI"]);
 if (isset($ruta["query"])) {
 
     if (
-        $ruta["query"] == "ctrRegFactura" ||
-        $ruta["query"] == "ctrEditFactura" ||
         $ruta["query"] == "ctrNumFactura" ||
         $ruta["query"] == "ctrUltimoCufd" ||
         $ruta["query"] == "ctrNuevoCufd" ||
@@ -33,28 +31,6 @@ class ControladorFactura
 
         $respuesta = ModeloFactura::mdlInfoFactura($id);
         return $respuesta;
-    }
-
-
-    static public function ctrEditFactura()
-    {
-        require "../modelo/facturaModelo.php";
-
-        if ($_POST["password"] == $_POST["passActual"]) {
-            $password = $_POST["password"];
-        } else {
-            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-        }
-
-
-        $data = array(
-            "password" => $password,
-            "id" => $_POST["idFactura"],
-            "perfil" => $_POST["perfil"],
-            "estado" => $_POST["estado"]
-        );
-
-        ModeloFactura::mdlEditFactura($data);
     }
 
     static public  function ctrEliFactura()
