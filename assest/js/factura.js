@@ -106,12 +106,16 @@ function busProducto() {
 }
 
 function calcularPreProd() {
+
+  // el descuento debe aplicarse sobre el total del producto =>(cantidad + P.Unitario)
+
   let cantPro = parseInt(document.getElementById("cantProducto").value)
   let descProducto = parseFloat(document.getElementById("descProducto").value)
   let preUnitario = parseFloat(document.getElementById("preUnitario").value)
 
-  let preProducto = preUnitario - descProducto
-  document.getElementById("preTotal").value = preProducto * cantPro
+  let preProducto = (preUnitario * cantPro) - descProducto
+
+  document.getElementById("preTotal").value = preProducto
 }
 
 // Carrito
@@ -314,14 +318,14 @@ function verificarVigenciaCufd() {
 }
 
 // transformar fecha de formato iso 8601
-function transformarFecha(fechaISO){
-  let fecha_iso=fechaISO.split("T")
-  let hora_iso=fecha_iso[1].split(".")
+function transformarFecha(fechaISO) {
+  let fecha_iso = fechaISO.split("T")
+  let hora_iso = fecha_iso[1].split(".")
 
-  let fecha=fecha_iso[0]
-  let hora=hora_iso[0]
+  let fecha = fecha_iso[0]
+  let hora = hora_iso[0]
 
-  let fecha_hora=fecha+" "+hora
+  let fecha_hora = fecha + " " + hora
   return fecha_hora
 }
 
@@ -432,52 +436,52 @@ function emitirFactura() {
       processData: false,
       success: function (data) {
         console.log(data)
-        
-        if(data["codigoResultado"]!= 908){
+
+        if (data["codigoResultado"] != 908) {
           $("#panelInfo").before("<span class='text-danger'>Error, Factura no emitida!</span><br>")
-        }else{
+        } else {
           $("#panelInfo").before("<span>Registrado factura...</span><br>")
 
-          let datos={
-            codigoResultado:data["codigoResultado"],
-            codigoRecepcion:data["datoAdicional"]["codigoRecepcion"],
-            cuf:data["datoAdicional"]["cuf"],
-            sentDate:data["datoAdicional"]["sentDate"],
-            xml:data["datoAdicional"]["xml"],
+          let datos = {
+            codigoResultado: data["codigoResultado"],
+            codigoRecepcion: data["datoAdicional"]["codigoRecepcion"],
+            cuf: data["datoAdicional"]["cuf"],
+            sentDate: data["datoAdicional"]["sentDate"],
+            xml: data["datoAdicional"]["xml"],
           }
           registrarFactura(datos)
 
         }
-        
+
       }
     })
   }
 }
 
-function registrarFactura(datos){
+function registrarFactura(datos) {
   let numFactura = document.getElementById("numFactura").value
   let idCliente = document.getElementById("idCliente").value
   let subTotal = parseFloat(document.getElementById("subTotal").value)
   let descAdicional = parseFloat(document.getElementById("descAdicional").value)
   let totApagar = parseFloat(document.getElementById("totApagar").value)
   let fechaEmision = transformarFecha(datos["sentDate"])
-  let idUsuario=document.getElementById("idUsuario").value
+  let idUsuario = document.getElementById("idUsuario").value
   let usuarioLogin = document.getElementById("usuarioLogin").innerHTML
 
-  
-  let obj={
-    "codFactura":numFactura,
+
+  let obj = {
+    "codFactura": numFactura,
     "idCliente": idCliente,
-    "detalle":JSON.stringify(arregloCarrito),
-    "neto":subTotal,
+    "detalle": JSON.stringify(arregloCarrito),
+    "neto": subTotal,
     "descuento": descAdicional,
     "total": totApagar,
     "fechaEmision": fechaEmision,
     "cufd": cufd,
-    "cuf":datos["cuf"],
-    "xml":datos["xml"],
-    "idUsuario":idUsuario,
-    "usuario":usuarioLogin,
+    "cuf": datos["cuf"],
+    "xml": datos["xml"],
+    "idUsuario": idUsuario,
+    "usuario": usuarioLogin,
     "leyenda": leyenda
   }
 
@@ -487,38 +491,130 @@ function registrarFactura(datos){
     data: obj,
     cache: false,
     success: function (data) {
-      if(data=="ok"){
+      if (data == "ok") {
         Swal.fire({
-          icon:"success",
-          showConfirmButton:false,
-          title:"Factura Registrada"
+          icon: "success",
+          showConfirmButton: false,
+          title: "Factura Registrada"
         })
-        setTimeout(function(){
+        setTimeout(function () {
           location.reload()
         }, 1000)
-      }else{
+      } else {
         Swal.fire({
-          icon:"error",
-          showConfirmButton:false,
-          title:"Error de registro",
-          timer:1500
+          icon: "error",
+          showConfirmButton: false,
+          title: "Error de registro",
+          timer: 1500
         })
       }
     }
   })
 }
 
-function MVerFactura(id){
+function MVerFactura(id) {
   $("#modal-xl").modal("show");
-   
-  var obj="";
+
+  var obj = "";
   $.ajax({
- 
-     type:"POST",
-     url:"vista/factura/MVerFactura.php?id="+id,
-     data: obj,
-     success: function(data) {
-         $("#content-xl").html(data);
-     }
-  })
+
+    type: "POST",
+    url: "vista/factura/MVerFactura.php?id=" + id,
+    data: obj,
+    success: function (data) {
+      $("#content-xl").html(data);
+    }
+  })
+}
+
+function MEliFactura(cuf) {
+  let obj = {
+    codigoAmbiente: 2,
+    codigoPuntoVenta: 0,
+    codigoPuntoVentaSpecified: true,
+    codigoSistema: codSistema,
+    codigoSucursal: 0,
+    nit: nitEmpresa,
+    codigoDocumentoSector: 1,
+    codigoEmision: 1,
+    codigoModalidad: 2,
+    cufd: cufd,
+    cuis: cuis,
+    tipoFacturaDocumento: 1,
+    codigoMotivo: 1,
+    cuf: cuf,
+  }
+  Swal.fire({
+    title: "Estas seguro de anular esta factura?",
+    showDenyButton: true,
+    showCancelButton: false,
+    ConfirmButtonText: "Confirmar",
+    denyButtonText: "Cancelar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // anular la factura
+      $.ajax({
+        type: "POST",
+        url: host + "api/CompraVenta/anulacion",
+        data: JSON.stringify(obj),
+        cache: false,
+        contentType: "application/json",
+        processData: false,
+        success: function (data) {
+          // console.log(data)
+          if (data["codigoEstado"] == 905) {
+
+            //anular en DB
+            anularFactura(cuf)
+            
+
+          }else{
+            Swal.fire({
+              icon:'error',
+              titile:'Error',
+              text:'Anulacion rechazada',
+              showConfirmButton:false,
+              timer:1000
+            })
+          }
+        }
+      })
+    }
+
+  })
+}
+
+function anularFactura(cuf) {
+  let obj = {
+    cuf: cuf
+  }
+  $.ajax({
+    type: "POST",
+    url: "controlador/facturaControlador.php?ctrAnularFactura",
+    data: obj,
+    success: function (data) {
+      
+      //aviso de confirmacion
+      if(data=="ok"){
+        Swal.fire({
+          icon:'success',
+          titile:'Factura Anulada',
+          showConfirmButton:false,
+          timer:1000
+        })
+
+        setTimeout(function(){
+          location.reload()
+        },1200 )
+      }else{
+        Swal.fire({
+          icon:'error',
+          titile:'Error',
+          text:'Error al anular en el registro',
+          showConfirmButton:false,
+          timer:1000
+        })
+      }
+    }
+  })
 }
