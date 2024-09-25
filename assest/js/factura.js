@@ -302,7 +302,7 @@ function verificarVigenciaCufd() {
       // fecha del ultimo cufd de mi DB
       let vigCufdActual = new Date(data["fecha_vigencia"])
 
-      if (date.getTime() > vigCufdActual.getTime()) {
+      if (date.getTime() > vigCufdActual.getTime() || data==false) {
         $("#panelInfo").before("<span class='text-warning'>Cufd caducado!</span><br>")
         $("#panelInfo").before("<span>Registrando cufd...</span><br>")
         registrarNuevoCufd()
@@ -527,6 +527,7 @@ function MVerFactura(id) {
   })
 }
 
+
 function MEliFactura(cuf) {
   let obj = {
     codigoAmbiente: 2,
@@ -548,7 +549,7 @@ function MEliFactura(cuf) {
     title: "Estas seguro de anular esta factura?",
     showDenyButton: true,
     showCancelButton: false,
-    ConfirmButtonText: "Confirmar",
+    confirmButtonText:'Confirmar',
     denyButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
