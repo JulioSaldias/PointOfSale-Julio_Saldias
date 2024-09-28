@@ -572,7 +572,7 @@ function MEliFactura(cuf) {
           }else{
             Swal.fire({
               icon:'error',
-              titile:'Error',
+              title:'Error',
               text:'Anulacion rechazada',
               showConfirmButton:false,
               timer:1000
@@ -599,7 +599,7 @@ function anularFactura(cuf) {
       if(data=="ok"){
         Swal.fire({
           icon:'success',
-          titile:'Factura Anulada',
+          title:'Factura Anulada',
           showConfirmButton:false,
           timer:1000
         })
@@ -610,7 +610,7 @@ function anularFactura(cuf) {
       }else{
         Swal.fire({
           icon:'error',
-          titile:'Error',
+          title:'Error',
           text:'Error al anular en el registro',
           showConfirmButton:false,
           timer:1000
