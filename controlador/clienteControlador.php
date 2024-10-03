@@ -73,4 +73,11 @@ class ControladorCliente
         $respuesta = ModeloCliente::mdlBusCliente($nitCliente);
         echo json_encode($respuesta);
     }
+
+
+    static public function ctrCantidadClientes()
+    {
+        $respuesta = ModeloCliente::mdlCantidadClientes();
+        return $respuesta;
+    }
 }

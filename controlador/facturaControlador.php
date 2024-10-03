@@ -53,48 +53,58 @@ class ControladorFactura
         }
     }
 
-    static public function ctrNuevoCufd(){
+    static public function ctrNuevoCufd()
+    {
         require "../modelo/facturaModelo.php";
-        $data=array(
-        "cufd"=>$_POST["cufd"],
-        "fechaVigCufd"=>$_POST["fechaVigCufd"],
-        "codControlCufd"=>$_POST["codControlCufd"]
+        $data = array(
+            "cufd" => $_POST["cufd"],
+            "fechaVigCufd" => $_POST["fechaVigCufd"],
+            "codControlCufd" => $_POST["codControlCufd"]
         );
         echo ModeloFactura::mdlNuevoCufd($data);
     }
 
-    static public function ctrUltimoCufd(){
+    static public function ctrUltimoCufd()
+    {
         require "../modelo/facturaModelo.php";
 
         $respuesta = ModeloFactura::mdlUltimoCufd();
         echo json_encode($respuesta);
     }
 
-    static  public function ctrLeyenda(){
+    static  public function ctrLeyenda()
+    {
         require "../modelo/facturaModelo.php";
         $respuesta = ModeloFactura::mdlLeyenda();
         echo json_encode($respuesta);
     }
 
-    static public function ctrRegistrarFactura(){
+    static public function ctrRegistrarFactura()
+    {
         require "../modelo/facturaModelo.php";
-        $data=array (
-            "codFactura"=>$_POST["codFactura"],
-            "idCliente"=>$_POST["idCliente"],
-            "detalle"=>$_POST["detalle"],
-            "neto"=>$_POST["neto"],
-            "descuento"=> $_POST["descuento"],
-            "total"=> $_POST["total"],
-            "fechaEmision"=> $_POST["fechaEmision"],
-            "cufd"=> $_POST["cufd"],
-            "cuf"=>$_POST["cuf"],
-            "xml"=>$_POST["xml"],
-            "idUsuario"=>$_POST["idUsuario"],
-            "usuario"=>$_POST["usuario"],
-            "leyenda"=> $_POST["leyenda"]
+        $data = array(
+            "codFactura" => $_POST["codFactura"],
+            "idCliente" => $_POST["idCliente"],
+            "detalle" => $_POST["detalle"],
+            "neto" => $_POST["neto"],
+            "descuento" => $_POST["descuento"],
+            "total" => $_POST["total"],
+            "fechaEmision" => $_POST["fechaEmision"],
+            "cufd" => $_POST["cufd"],
+            "cuf" => $_POST["cuf"],
+            "xml" => $_POST["xml"],
+            "idUsuario" => $_POST["idUsuario"],
+            "usuario" => $_POST["usuario"],
+            "leyenda" => $_POST["leyenda"]
         );
 
-        $respuesta=ModeloFactura::mdlRegistrarFactura($data);
+        $respuesta = ModeloFactura::mdlRegistrarFactura($data);
         echo $respuesta;
+    }
+
+    static public function ctrCantidadVentas()
+    {
+        $respuesta = ModeloFactura::mldCantidadVentas();
+        return $respuesta;
     }
 }
