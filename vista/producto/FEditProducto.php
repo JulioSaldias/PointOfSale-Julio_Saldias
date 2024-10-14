@@ -168,4 +168,18 @@ $producto = ControladorProducto::ctrInfoProducto($id);
       }
     });
   });
+
+  function previsualizar() {
+    const imgInput = document.getElementById('imgProducto');
+    const imgPreview = document.querySelector('.previsualizar');
+
+    if (imgInput.files && imgInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imgPreview.src = e.target.result;
+        }
+        reader.readAsDataURL(imgInput.files[0]);
+    }
+}
+
 </script>
